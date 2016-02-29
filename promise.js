@@ -1,23 +1,25 @@
 'use strict';
+// http://learn.javascript.ru/promise
 
-let promise = new Promise((resolve, reject) => {
-	setTimeout(() => {
-		// переведёт промис в состояние fulfilled с результатом "result"
-		resolve('Hooray!');
-	}, 1000);
-});
 
-promise
-	.then( 
-		result => {
-			// первая функция-обработчик - запустится при вызове resolve
-			alert(`Fullfilled ${result}`);
-		},
-		error => {
-			// вторая функция - запустится при вызове reject
-			alert(`Rejected ${error}`);
-		} 
-	);
+// let promise = new Promise((resolve, reject) => {
+// 	setTimeout(() => {
+// 		// переведёт промис в состояние fulfilled с результатом "result"
+// 		resolve('Hooray!');
+// 	}, 1000);
+// });
+
+// promise
+// 	.then( 
+// 		result => {
+// 			// первая функция-обработчик - запустится при вызове resolve
+// 			alert(`Fullfilled ${result}`);
+// 		},
+// 		error => {
+// 			// вторая функция - запустится при вызове reject
+// 			alert(`Rejected ${error}`);
+// 		} 
+// 	);
 
 
 
@@ -26,7 +28,7 @@ function httpGet (url) {
 	return new Promise((resolve, reject) => {
 		var xhr = new XMLHttpRequest();
 		xhr.open('GET', url, true);
-		xhr.onload = () => {
+		xhr.onload = function() {
 			if (this.status == 200) {
 				resolve(this.response);
 			} else {
@@ -35,13 +37,17 @@ function httpGet (url) {
 				reject(error);
 			}
 		};
-		xhr.onerror = () => reject(new Error('Network Error'));
+		xhr.onerror = function() {
+			reject(new Error('Network Error'));	
+		} 
 		xhr.send();
 	});
 }
 
-httpGet('/some/user.json')
-	.then(
-		result => alert(`Fullfilled: ${result}`),
-		error => alert(`Rejected: ${error}`)
-	);
+function getFile() {
+	httpGet('node/files/user.json')
+		.then(
+			result => alert(`Fullfilled: ${result}`),
+			error => alert(`Rejected: ${error}`)
+		);
+}
