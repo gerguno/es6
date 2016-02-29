@@ -47,7 +47,28 @@ function httpGet (url) {
 function getFile() {
 	httpGet('node/files/user.json')
 		.then(
-			result => alert(`Fullfilled: ${result}`),
+			result => {
+				alert(`Fullfilled: ${result}`);
+				let user = JSON.parse(result);
+				return user;
+			},
 			error => alert(`Rejected: ${error}`)
-		);
+		)
+		.then(
+			user => {
+				alert(user);
+				return httpGet(`https://api.github.com/users/${user.nickname}`);
+			}
+		)
+		.then(
+			githubUser => {
+				githubUser = JSON.parse(githubUser);
+
+				let img = new Image();
+				img.src = githubUser.avatar_url;
+				img.className = "promise-avatar";
+				document.body.appendChild(img);
+			}
+		)
+
 }
