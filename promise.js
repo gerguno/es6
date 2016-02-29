@@ -63,6 +63,7 @@ function getFile() {
 		.then(
 			githubUser => {
 				githubUser = JSON.parse(githubUser);
+				console.log(githubUser);
 
 				let img = new Image();
 				img.src = githubUser.avatar_url;
