@@ -51,8 +51,7 @@ function getFile() {
 				alert(`Fullfilled: ${result}`);
 				let user = JSON.parse(result);
 				return user;
-			},
-			error => alert(`Rejected: ${error}`)
+			}
 		)
 		.then(
 			user => {
@@ -71,5 +70,9 @@ function getFile() {
 				document.body.appendChild(img);
 			}
 		)
+		.catch(error => {
+			alert(`Rejected: ${error}`);
+		})
 
 }
+
