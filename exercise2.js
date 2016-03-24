@@ -1,10 +1,10 @@
 "use strict";
 
-let urls = [
+var urls = [
 	'/node/files/user.json',
 	'/node/files/guest.json'
 ];
-let results = [];
+var results = [];
 
 
 // Parallel loading
